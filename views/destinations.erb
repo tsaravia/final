@@ -1,0 +1,7 @@
+<h1>Visit Argentina</h1>
+
+<h3>Get the best recommendations from your school classmates</h3>
+
+<% for location in @destinations %>
+    <p><a href="/location/<%= location[:id] %>"><%= location[:title] %></a></p>
+<% end %>

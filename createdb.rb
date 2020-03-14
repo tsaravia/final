@@ -5,31 +5,52 @@ DB = Sequel.connect(connection_string)                                          
 #######################################################################################
 
 # Database schema - this should reflect your domain model
-DB.create_table! :events do
+DB.create_table! :destinations do
   primary_key :id
   String :title
   String :description, text: true
-  String :date
-  String :location
+  String :type
+  String :rating
+  String :budget
 end
-DB.create_table! :rsvps do
+DB.create_table! :reviews do
   primary_key :id
-  foreign_key :event_id
-  Boolean :going
-  String :name
-  String :email
+  foreign_key :destinations_id
+  Boolean :visited
+  String :summary
+  String :rating
   String :comments, text: true
+  String :student_name
+  String :student_year
+  String :student_email
+end
+DB.create_table! :users do
+  primary_key :id
+  String :student_name
+  String :student_email
+  String :student_year
+  String :password
 end
 
 # Insert initial (seed) data
-events_table = DB.from(:events)
+destinations_table = DB.from(:destinations)
 
-events_table.insert(title: "Bacon Burger Taco Fest", 
-                    description: "Here we go again bacon burger taco fans, another Bacon Burger Taco Fest is here!",
-                    date: "June 21",
-                    location: "Kellogg Global Hub")
+destinations_table.insert(title: "Bariloche", 
+                    description: "Beautiful scenery in the Northern Patagonia with activities for every interest!",
+                    type: "Adventure",
+                    rating: "4.5/5",
+                    budget: "$150 per day")
 
-events_table.insert(title: "Kaleapolooza", 
-                    description: "If you're into nutrition and vitamins and stuff, this is the event for you.",
-                    date: "July 4",
-                    location: "Nowhere")
+destinations_table.insert(title: "Mendoza", 
+                    description: "Explore the best wine and amazing Argentinean food on the gorgeus valley home of Malbec grapes!",
+                    type: "Wine",
+                    rating: "3.8/5",
+                    budget: "$250 per day")
+
+destinations_table.insert(title: "Buenos Aires", 
+                    description: "Inmerse yourself in this vibrant city home of tango, all-night clubs and world-class restaurants",
+                    type: "City",
+                    rating: "4.9/5",
+                    budget: "$100 per day")
+
+puts "Success!"
