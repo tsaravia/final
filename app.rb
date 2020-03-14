@@ -55,9 +55,41 @@ get "/location/:id" do
     @reviews = reviews_table.where(destinations_id: @location[:id]).to_a
     @local_count = reviews_table.where(destinations_id: @location[:id], local: true).count
     @tourist_count = reviews_table.where(destinations_id: @location[:id], local: false).count
+    @reviews_count = reviews_table.where(destinations_id: @location[:id]).count
 
     view "location"
 
+end
+
+# display the reviews form (aka "new")
+get "/location/:id/reviews/new" do
+    puts "params: #{params}"
+
+    @location = destinations_table.where(id: params[:id]).to_a[0]
+    view "new_review"
+end
+
+# receive the submitted reviews form (aka "create")
+post "/location/:id/reviews/create" do
+    puts "params: #{params}"
+
+    # first find the location that you are leaving a comment on
+    @location = destinations_table.where(id: params[:id]).to_a[0]
+
+    # next we want to insert a row in the reviews table with the reviews form data
+    reviews_table.insert(
+        destinations_id: @location[:id],
+        user_id: session["user_id"],
+        comments: params["comments"],
+        local: params["local"],
+        rating: params["rating"],
+        summary: params["summary"],
+        student_name: @current_user[:student_name],
+        student_year: @current_user[:student_year],
+        student_email: @current_user[:student_email]
+    )
+
+    redirect "/location/#{@location[:id]}"
 end
 
 ### Users logic section ###

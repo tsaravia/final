@@ -22,6 +22,9 @@
         </p>
     </div>
     <div class="col-sm-6">
+    <h2><%= @location[:title] %> reviews:</h2>
+    <p>Total reviews: <%= @reviews_count %></p>
+    <p><i class="far fa-compass"></i> Locals: <%= @local_count %> | <i class="fas fa-suitcase-rolling"></i> Tourists: <%= @tourist_count %></p>
         <% for review in @reviews %>
                 <p><% if review[:local] %>
                     <i class="far fa-compass"></i>
@@ -31,7 +34,13 @@
                 <b><%= review[:summary] %></b></p>
                     <p><%= review[:comments] %></p>
                     <p>Rating: <%= review[:rating] %>  |  <%= review[:student_name] %> - <%= review[:student_year] %></p>
-            </div>
         <% end %>
+        <p class="mt-5">
+            <% if @current_user %>
+                <a href="/location/<%= @location[:id] %>/reviews/new" class="btn btn-primary">Leave a comment!</a>
+            <% else %>
+                <a href="/logins/new" class="btn btn-danger">Please sign in to comment</a>
+            <% end %>
+        </p>
     </div>
 </div>
