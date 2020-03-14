@@ -16,7 +16,8 @@ end
 DB.create_table! :reviews do
   primary_key :id
   foreign_key :destinations_id
-  Boolean :visited
+  foreign_key :user_id
+  Boolean :local
   String :summary
   String :rating
   String :comments, text: true
@@ -34,6 +35,7 @@ end
 
 # Insert initial (seed) data
 destinations_table = DB.from(:destinations)
+reviews_table = DB.from(:reviews)
 
 destinations_table.insert(title: "Bariloche", 
                     description: "Beautiful scenery in the Northern Patagonia with activities for every interest!",
@@ -52,5 +54,35 @@ destinations_table.insert(title: "Buenos Aires",
                     type: "City",
                     rating: "4.9/5",
                     budget: "$100 per day")
+
+reviews_table.insert(destinations_id: 1,
+                    user_id: 0,
+                    local: true,
+                    summary: "Amazing place!",
+                    rating: "4.6",
+                    comments: "Bariloche is a great place for outdoorsy and nature-driven people. When there, go to a hike in the Frey mountain, and for dinner don't leave without going to El Boliche de Alberto.",
+                    student_name: "Martin Saravia",
+                    student_year: "2021",
+                    student_email: "martin@example.com.ar")
+
+reviews_table.insert(destinations_id: 1,
+                    user_id: 1,
+                    local: false,
+                    summary: "Bariloche has great skiing in winter, awesome rafting in summer",
+                    rating: "4.8",
+                    comments: "No matter what time of year you’re there, Bariloche’s got something to offer. During winter months, Mount Cathedral offers some of the best skiing in the nation, while during the warmer seasons the area’s many lakes and rivers offer numerous rafting and other outdoor activities, including horseback riding, paragliding, zip-lining, kayaking, and more.",
+                    student_name: "John Doe",
+                    student_year: "2020",
+                    student_email: "john@example.com")
+
+reviews_table.insert(destinations_id: 2,
+                    user_id: 1,
+                    local: false,
+                    summary: "Bariloche has great skiing in winter, awesome rafting in summer",
+                    rating: "4.8",
+                    comments: "No matter what time of year you’re there, Bariloche’s got something to offer. During winter months, Mount Cathedral offers some of the best skiing in the nation, while during the warmer seasons the area’s many lakes and rivers offer numerous rafting and other outdoor activities, including horseback riding, paragliding, zip-lining, kayaking, and more.",
+                    student_name: "John Doe",
+                    student_year: "2020",
+                    student_email: "john@example.com")
 
 puts "Success!"

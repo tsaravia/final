@@ -1,23 +1,37 @@
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-6">
         <h1>
             <i class="fas fa-map-marker-alt"></i>
             <%= @location[:title] %>
         </h1>
         <h3>Rating: <%= @location[:rating] %></h3>
+        <p><b><%= @location[:description] %></b></p>
         <p>Type: <%= @location[:type] %></p>
         <p>Budget: <%= @location[:budget] %></p>
 
-    <div class="container mt-5">
         <iframe
-            width="500"
-            height="600"
-            frameborder="0" style="border:0"
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCtovsQvkIUWlNqtYwXY87gEd4ZSmJEhMw
-            &q=<%= @latitude %>,<%= @longitude %> &zoom=5" allowfullscreen>
-      </iframe>
-      <p>
-        <a href="/" class="btn btn-primary">Back</a>
-      </p>
+                width="500"
+                height="600"
+                frameborder="0" style="border:0"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCtovsQvkIUWlNqtYwXY87gEd4ZSmJEhMw
+                &q=<%= @latitude %>,<%= @longitude %> &zoom=5" allowfullscreen>
+        </iframe>
+        
+        <p>
+            <a href="/" class="btn btn-primary">Back</a>
+        </p>
+    </div>
+    <div class="col-sm-6">
+        <% for review in @reviews %>
+                <p><% if review[:local] %>
+                    <i class="far fa-compass"></i>
+                <% else %>
+                    <i class="fas fa-suitcase-rolling"></i>
+                <% end %>
+                <b><%= review[:summary] %></b></p>
+                    <p><%= review[:comments] %></p>
+                    <p>Rating: <%= review[:rating] %>  |  <%= review[:student_name] %> - <%= review[:student_year] %></p>
+            </div>
+        <% end %>
     </div>
 </div>

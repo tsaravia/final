@@ -23,6 +23,8 @@ before do
     @current_user = users_table.where(id: session["user_id"]).to_a[0]
 end
 
+### Destinations summary section ###
+
 # homepage and list of destinations (aka "index")
 get "/" do
     puts "params: #{params}"
@@ -33,15 +35,15 @@ get "/" do
     view "destinations"
 end
 
+### Locations detail section ###
+
 # location details (aka "show")
 get "/location/:id" do
     puts "params: #{params}"
 
     @location = destinations_table.where(id: params[:id]).to_a[0]
     pp @location
-
-    # @reviews = reviews_table.where(location_id: @location[:id]).to_a
-    # @going_count = rsvps_table.where(location_id: @location[:id], going: true).count
+    @users_table = users_table
 
     results = Geocoder.search(@location[:title])
     lat_long = results.first.coordinates # => [lat, long]
@@ -50,11 +52,15 @@ get "/location/:id" do
     @latitude = lat_long[0]
     @longitude = lat_long[1]
 
+    @reviews = reviews_table.where(destinations_id: @location[:id]).to_a
+    @local_count = reviews_table.where(destinations_id: @location[:id], local: true).count
+    @tourist_count = reviews_table.where(destinations_id: @location[:id], local: false).count
 
     view "location"
+
 end
 
-
+### Users logic section ###
 
 # display the signup form (aka "new")
 get "/users/new" do
