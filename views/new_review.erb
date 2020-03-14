@@ -5,25 +5,26 @@
 <h2>Leave a comment on <%= @location[:title] %></h2>
 
 <form action="/location/<%= @location[:id] %>/reviews/create" method="post">
-  <div class="form-group">
-    <label>Are you a local from <%= @location[:title] %>?</label>
-    <select class="form-control" name="local">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label>Rating (out of 5)</label>
-    <textarea class="form-control" rows="1" name="rating"></textarea>
-  </div>
-  <div class="form-group">
-    <label>Provide a summary</label>
-    <textarea class="form-control" rows="1" name="summary"></textarea>
-  </div>
-  <div class="form-group">
-    <label>Comments</label>
-    <textarea class="form-control" rows="5" name="comments"></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-group">
+        <label>Are you a local from <%= @location[:title] %>?</label>
+        <select class="form-control" name="local">
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+        </select>
+    </div>
+    <div class+"form-group">
+        <label for="customRange2">How much do you like it?</label>
+        <small id="rangeHelp" class="form-text text-muted">Drag & drop the range button. The further to the right the more you liked it!</small>
+        <input type="range" class="custom-range" min="0" max="5" id="customRange2" name="rating">    
+    </div>
+    <div class="form-group">
+        <label>Provide a summary of this place</label>
+        <textarea class="form-control" rows="1" name="summary"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Comments for your classmates to read</label>
+        <textarea class="form-control" rows="5" name="comments"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
