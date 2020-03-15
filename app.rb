@@ -56,6 +56,7 @@ get "/location/:id" do
     @local_count = reviews_table.where(destinations_id: @location[:id], local: true).count
     @tourist_count = reviews_table.where(destinations_id: @location[:id], local: false).count
     @reviews_count = reviews_table.where(destinations_id: @location[:id]).count
+    @rating_avg = reviews_table.where(destinations_id: @location[:id]).avg(:rating)
 
     view "location"
 
